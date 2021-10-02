@@ -11,6 +11,11 @@ const {
   OK,
 } = require("../../constants/messages");
 
+const {
+  WORLD_TITLE,
+  WORLD_DESCRIPTION
+} = require("../../constants/examples");
+
 const getProjectList = async (req, res, next) => {
   const email = jwt.decode(token);
 
@@ -26,19 +31,19 @@ const getProjectList = async (req, res, next) => {
 };
 
 const createProject = async (req, res, next) => {
-  const { creatorEmail, title, description } = req.body;
+  const { creatorId, title, description } = req.body;
   const { auth: token } = req.cookies;
 
-  const email = jwt.decode(token);
+  const userId = jwt.decode(token);
 
   try {
-    const inValidUser = String(email) !== String(creatorEmail);
+    const isInValidUser = String(userId) !== String(creatorId);
 
-    if (inValidUser) {
+    if (isInValidUser) {
       throw createError(403, NO_AUTHORITY_TO_ACCESS);
     }
 
-    const isInvalidRequest = (creatorEmail === undefined) || (title === undefined) || (description === undefined);
+    const isInvalidRequest = (creatorId === undefined) || (title === undefined) || (description === undefined);
 
     if (isInvalidRequest) {
       throw createError(422, INVALID_REQUEST);
@@ -48,15 +53,13 @@ const createProject = async (req, res, next) => {
       title,
       description,
       world: {
-        title: "World of Fantasy",
-        description: "Once upon a time there were four little rabbits...",
+        title: WORLD_TITLE,
+        description: WORLD_DESCRIPTION,
       },
     });
 
-    const user = await User.findOne({ email });
-
     await User.findByIdAndUpdate(
-      user._id,
+      userId,
       { $push: { projects: createdProject._id } },
       { new: true }
     );
