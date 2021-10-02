@@ -47,9 +47,9 @@ const registerUser = async (req, res, next) => {
   const { idToken } = req.body;
 
   try {
-    const isInvalid = (idToken === undefined);
+    const isInvalidRequest = (idToken === undefined);
 
-    if (isInvalid) {
+    if (isInvalidRequest) {
       throw createError(422, INVALID_REQUEST);
     }
 
