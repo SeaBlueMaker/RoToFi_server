@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   },
   projects: [{
     type: ObjectId,
+    ref: "Project",
   }],
 });
 

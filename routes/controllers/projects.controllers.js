@@ -17,10 +17,14 @@ const {
 } = require("../../constants/examples");
 
 const getProjectList = async (req, res, next) => {
-  const email = jwt.decode(token);
+  const { auth: token } = req.cookies;
+
+  const userId = jwt.decode(token);
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User
+      .findById(userId)
+      .populate(["projects"]);;
 
     res
       .status(200)
@@ -76,7 +80,39 @@ const createProject = async (req, res, next) => {
   }
 };
 
+const deleteProject = async (req, res, next) => {
+  const { projectId } = req.body;
+  const { auth: token } = req.cookies;
+
+  const userId = jwt.decode(token);
+
+  try {
+    const project = await Project.findByIdAndDelete(projectId, { new: true });
+
+    if (project === null) {
+      throw createError(404, NOT_FOUND);
+    }
+
+    await User.findByIdAndUpdate(
+      userId,
+      { $pull: { projects: projectId } },
+      { new: true }
+    );
+
+    res.send({ result: OK });
+  } catch (error) {
+    if (error.status) {
+      next(error);
+
+      return;
+    }
+
+    next({ message: UNEXPECTED_ERROR });
+  }
+};
+
 module.exports = {
   getProjectList,
   createProject,
+  deleteProject,
 };
