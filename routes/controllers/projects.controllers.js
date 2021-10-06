@@ -16,6 +16,20 @@ const {
   WORLD_DESCRIPTION
 } = require("../../constants/examples");
 
+const getProject = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    const project = await Project.findById(id);
+
+    res
+      .status(200)
+      .send({ result: OK, project });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getProjectList = async (req, res, next) => {
   const { auth: token } = req.cookies;
 
@@ -112,6 +126,7 @@ const deleteProject = async (req, res, next) => {
 };
 
 module.exports = {
+  getProject,
   getProjectList,
   createProject,
   deleteProject,

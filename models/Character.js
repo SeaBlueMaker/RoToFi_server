@@ -17,10 +17,6 @@ const characterSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  nationality: {
-    type: String,
-    required: true,
-  },
   appearance: {
     type: String,
     required: true,
@@ -35,7 +31,6 @@ const characterSchema = mongoose.Schema({
   },
   imageURL: {
     type: String,
-    required: true,
   },
 });
 

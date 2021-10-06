@@ -9,6 +9,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const projectRouter = require("./routes/projects");
+const charactersRouter = require("./routes/characters");
 
 const { CLIENT_URL } = require("./config/envConfig");
 
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/projects", projectRouter);
+app.use("/characters", charactersRouter);
 
 app.use((req, res, next) => {
   next(createError(404));
