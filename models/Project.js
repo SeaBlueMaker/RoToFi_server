@@ -21,7 +21,10 @@ const projectSchema = mongoose.Schema({
     },
   },
   plots: [ObjectId],
-  characters: [ObjectId],
+  characters: [{
+    type: ObjectId,
+    ref: "Character",
+  }],
 });
 
 module.exports = mongoose.model("Project", projectSchema);

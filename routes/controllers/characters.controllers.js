@@ -56,6 +56,37 @@ const createCharacter = async (req, res, next) => {
   }
 };
 
+const updateCharacter = async (req, res, next) => {
+  const { characterId, character } = req.body;
+
+  try {
+    const isInvalidRequest = characterId === undefined || character === undefined;
+
+    if (isInvalidRequest) {
+      throw createError(422, INVALID_REQUEST);
+    }
+
+    const updatedCharacterData = await Character.findByIdAndUpdate(
+      characterId,
+      character,
+      { new: true }
+    );
+
+    res
+      .status(200)
+      .send({ result: OK, updatedCharacterData });
+  } catch (error) {
+    if (error.status) {
+      next(error);
+
+      return;
+    }
+
+    next({ message: UNEXPECTED_ERROR });
+  }
+};
+
 module.exports = {
   createCharacter,
+  updateCharacter,
 };

@@ -20,7 +20,9 @@ const getProject = async (req, res, next) => {
   const { id } = req.params;
 
   try {
-    const project = await Project.findById(id);
+    const project = await Project
+      .findById(id)
+      .populate(["characters"]);
 
     res
       .status(200)
@@ -38,7 +40,7 @@ const getProjectList = async (req, res, next) => {
   try {
     const user = await User
       .findById(userId)
-      .populate(["projects"]);;
+      .populate(["projects"]);
 
     res
       .status(200)
