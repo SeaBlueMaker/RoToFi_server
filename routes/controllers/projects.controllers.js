@@ -22,7 +22,7 @@ const getProject = async (req, res, next) => {
   try {
     const project = await Project
       .findById(id)
-      .populate(["characters"]);
+      .populate(["characters", "plots"]);
 
     res
       .status(200)

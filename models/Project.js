@@ -20,7 +20,10 @@ const projectSchema = mongoose.Schema({
       required: true,
     },
   },
-  plots: [ObjectId],
+  plots: [{
+    type: ObjectId,
+    ref: "Plot",
+  }],
   characters: [{
     type: ObjectId,
     ref: "Character",
