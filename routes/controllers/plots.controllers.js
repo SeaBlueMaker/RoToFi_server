@@ -70,7 +70,38 @@ const updatePlotOrder = async (req, res, next) => {
   }
 };
 
+const createDialogue = async (req, res, next) => {
+  const { plotId, character, script } = req.body;
+
+  try {
+    const isInvalidRequest = plotId === undefined || character === undefined || script === undefined;
+
+    if (isInvalidRequest) {
+      throw createError(422, INVALID_REQUEST);
+    }
+
+    const updatedPlot = await Plot.findByIdAndUpdate(
+      plotId,
+      { $push: { dialogues: { character, script } } },
+      { new: true }
+    );
+
+    res
+      .status(200)
+      .send({ result: OK, updatedPlot });
+  } catch (error) {
+    if (error.status) {
+      next(error);
+
+      return;
+    }
+
+    next({ message: UNEXPECTED_ERROR });
+  }
+};
+
 module.exports = {
   createPlot,
   updatePlotOrder,
+  createDialogue,
 };

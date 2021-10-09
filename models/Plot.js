@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const conversation = mongoose.Schema({
-  creator: {
+const dialogue = mongoose.Schema({
+  character: {
     type: ObjectId,
     ref: "Character",
   },
@@ -29,7 +29,7 @@ const plotSchema = mongoose.Schema({
       type: String,
     },
   },
-  conversations: [conversation],
+  dialogues: [dialogue],
 });
 
 module.exports = mongoose.model("Plot", plotSchema);
