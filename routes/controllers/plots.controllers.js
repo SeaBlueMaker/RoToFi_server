@@ -130,9 +130,46 @@ const updateSituation = async (req, res, next) => {
   }
 };
 
+const updateLocation = async (req, res, next) => {
+  const { plotId, title, imageURL, description } = req.body;
+
+  try {
+    const isInvalidRequest = plotId === undefined;
+
+    if (isInvalidRequest) {
+      throw createError(422, INVALID_REQUEST);
+    }
+
+    const target = {};
+
+    title && (target.title = title);
+    imageURL && (target.imageURL = imageURL);
+    description && (target.description = description);
+
+    const updatedPlot = await Plot.findByIdAndUpdate(
+      plotId,
+      { location: target },
+      { new: true }
+    );
+
+    res
+      .status(200)
+      .send({ result: OK, updatedPlot });
+  } catch (error) {
+    if (error.status) {
+      next(error);
+
+      return;
+    }
+
+    next({ message: UNEXPECTED_ERROR });
+  }
+};
+
 module.exports = {
   createPlot,
   updatePlotOrder,
   createDialogue,
   updateSituation,
+  updateLocation,
 };
