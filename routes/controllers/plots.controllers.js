@@ -100,8 +100,39 @@ const createDialogue = async (req, res, next) => {
   }
 };
 
+const updateSituation = async (req, res, next) => {
+  const { plotId, situation } = req.body;
+
+  try {
+    const isInvalidRequest = plotId === undefined || situation === undefined;
+
+    if (isInvalidRequest) {
+      throw createError(422, INVALID_REQUEST);
+    }
+
+    const updatedPlot = await Plot.findByIdAndUpdate(
+      plotId,
+      { situation },
+      { new: true }
+    );
+
+    res
+      .status(200)
+      .send({ result: OK, updatedPlot });
+  } catch (error) {
+    if (error.status) {
+      next(error);
+
+      return;
+    }
+
+    next({ message: UNEXPECTED_ERROR });
+  }
+};
+
 module.exports = {
   createPlot,
   updatePlotOrder,
   createDialogue,
+  updateSituation,
 };
