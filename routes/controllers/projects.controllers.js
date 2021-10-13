@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const Project = require("../../models/Project");
 const User = require("../../models/User");
+const Plot = require("../../models/Plot");
 
 const {
   NO_AUTHORITY_TO_ACCESS,
@@ -76,11 +77,44 @@ const createProject = async (req, res, next) => {
         title: WORLD_TITLE,
         description: WORLD_DESCRIPTION,
       },
+      plots: [],
     });
 
     await User.findByIdAndUpdate(
       userId,
       { $push: { projects: createdProject._id } },
+      { new: true }
+    );
+
+    const initialChapterCard = await Plot.create({
+      isTimeFlag: true,
+      situation: "기승전결이나 시간을 표기하는 챕터 카드입니다. 이 카드를 클릭한 후 에디터에서 편집해보세요!",
+      location: {
+        title: "장소명",
+        imageURL: "",
+        description: "장소에 대한 설명을 정리하는 공간입니다.",
+      },
+    });
+
+    const initialPlotCard = await Plot.create({
+      isTimeFlag: false,
+      situation: "한 챕터 내에서 전개되는 플롯을 표기하는 플롯 카드입니다. 이 카드를 클릭한 후 에디터에서 편집해보세요!",
+      location: {
+        title: "장소명",
+        imageURL: "",
+        description: "장소에 대한 설명을 정리하는 공간입니다.",
+      },
+    });
+
+    await Project.findByIdAndUpdate(
+      createdProject._id,
+      { $push: { plots: initialChapterCard } },
+      { new: true }
+    );
+
+    await Project.findByIdAndUpdate(
+      createdProject._id,
+      { $push: { plots: initialPlotCard } },
       { new: true }
     );
 
