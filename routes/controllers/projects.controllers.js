@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const Project = require("../../models/Project");
 const User = require("../../models/User");
 const Plot = require("../../models/Plot");
+const Character = require("../../models/Character");
 
 const {
   NO_AUTHORITY_TO_ACCESS,
@@ -115,6 +116,23 @@ const createProject = async (req, res, next) => {
     await Project.findByIdAndUpdate(
       createdProject._id,
       { $push: { plots: initialPlotCard } },
+      { new: true }
+    );
+
+    const initialCharacter = await Character.create({
+      name: "박무열",
+      role: "화이트 크리스마스의 주인공.",
+      sex: "남",
+      age: "19세",
+      appearance: "튀는 곳 없이 반듯한 외모",
+      personality: "수신고 최고의 모범생으로 '메뉴얼 맨'이라 불리는 바른생활 소년. 수신고의 학부모들에게 '사위 삼고 싶은 남학생' 설문조사를 했을 때 당당하게 1위를 차지했을 정도. 편지를 보낸 인물을 추적해나가는데 있어 가장 적극적으로 행동하는 인물. 또한 학생들 간의 이견다툼에 개입하여 상황을 수습하는 일을 도맡아하고 있다.",
+      etc: "기타사항",
+      imageURL: "",
+    });
+
+    await Project.findByIdAndUpdate(
+      createdProject._id,
+      { $push: { characters: initialCharacter } },
       { new: true }
     );
 
