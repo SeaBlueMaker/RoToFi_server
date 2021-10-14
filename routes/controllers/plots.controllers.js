@@ -11,7 +11,7 @@ const createPlot = async (req, res, next) => {
   const { projectId, isTimeFlag, situation, location } = req.body;
 
   try {
-    const isInvalidRequest = (projectId === undefined) || (isTimeFlag === undefined) || (situation === undefined) || (location === undefined);;
+    const isInvalidRequest = (projectId === undefined) || (isTimeFlag === undefined) || (situation === undefined) || (location === undefined);
 
     if (isInvalidRequest) {
       throw createError(422, INVALID_REQUEST);
@@ -30,6 +30,36 @@ const createPlot = async (req, res, next) => {
     );
 
     res.send({ result: OK, createdPlot });
+  } catch (error) {
+    if (error.status) {
+      next(error);
+
+      return;
+    }
+
+    next({ message: UNEXPECTED_ERROR });
+  }
+};
+
+const deletePlot = async (req, res, next) => {
+  const { projectId, plotId } = req.body;
+
+  try {
+    const isInvalidRequest = (projectId === undefined) || (plotId === undefined);
+
+    if (isInvalidRequest) {
+      throw createError(422, INVALID_REQUEST);
+    }
+
+    await Project.findByIdAndUpdate(
+      projectId,
+      { $pull: { plots: plotId } },
+      { new: true }
+    );
+
+    await Plot.findByIdAndDelete(projectId, { new: true });
+
+    res.send({ result: OK });
   } catch (error) {
     if (error.status) {
       next(error);
@@ -168,6 +198,7 @@ const updateLocation = async (req, res, next) => {
 
 module.exports = {
   createPlot,
+  deletePlot,
   updatePlotOrder,
   createDialogue,
   updateSituation,

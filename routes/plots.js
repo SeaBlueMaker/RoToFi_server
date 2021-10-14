@@ -3,11 +3,14 @@ const router = express.Router();
 
 const {
   createPlot,
+  deletePlot,
   updatePlotOrder,
   createDialogue,
   updateSituation,
   updateLocation,
 } = require("./controllers/plots.controllers");
+
+router.delete("/", deletePlot);
 
 router.post("/new", createPlot);
 
