@@ -10,7 +10,7 @@ const {
 
 const verifyToken = require("./middlewares/verifyToken");
 
-router.get("/", getProjectList);
+router.get("/", verifyToken, getProjectList);
 
 router.delete("/", verifyToken, deleteProject);
 

@@ -4,6 +4,7 @@ const createError = require("http-errors");
 const { SECRET_KEY } = require("../../config/envConfig");
 
 const {
+  UNDEFINED_TOKEN,
   EXPIRED_TOKEN,
   INVALID_TOKEN,
 } = require("../../constants/messages");
@@ -17,7 +18,7 @@ const verifyToken = async (req, res, next) => {
   const token = req.cookies?.auth;
 
   if (token === undefined) {
-    next(createError(401, INVALID_TOKEN));
+    next(createError(401, UNDEFINED_TOKEN));
 
     return;
   }

@@ -10,16 +10,6 @@ const projectSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  world: {
-    title: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-  },
   plots: [{
     type: ObjectId,
     ref: "Plot",

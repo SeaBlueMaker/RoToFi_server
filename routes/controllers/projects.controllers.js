@@ -14,8 +14,21 @@ const {
 } = require("../../constants/messages");
 
 const {
-  WORLD_TITLE,
-  WORLD_DESCRIPTION
+  CHAPTER_SITUATION,
+  CHAPTER_LOCATION_TITLE,
+  CHAPTER_LOCATION_DESCRIPTION,
+  CHAPTER_LOCATION_IMAGE,
+  PLOT_SITUATION,
+  PLOT_LOCATION_TITLE,
+  PLOT_LOCATION_DESCRIPTION,
+  CHARACTER_PERSONALITY,
+  CHARACTER_APPEARANCE,
+  CHARACTER_AGE,
+  CHARACTER_SEX,
+  CHARACTER_ROLE,
+  CHARACTER_NAME,
+  CHARACTER_ETC,
+  CHARACTER_IMAGE
 } = require("../../constants/examples");
 
 const getProject = async (req, res, next) => {
@@ -74,10 +87,6 @@ const createProject = async (req, res, next) => {
     const createdProject = await Project.create({
       title,
       description,
-      world: {
-        title: WORLD_TITLE,
-        description: WORLD_DESCRIPTION,
-      },
       plots: [],
     });
 
@@ -89,23 +98,27 @@ const createProject = async (req, res, next) => {
 
     const initialChapterCard = await Plot.create({
       isTimeFlag: true,
-      situation: "기승전결이나 시간을 표기하는 챕터 카드입니다. 이 카드를 클릭한 후 에디터에서 편집해보세요!",
+      situation: CHAPTER_SITUATION,
       location: {
-        title: "장소명",
-        imageURL: "",
-        description: "장소에 대한 설명을 정리하는 공간입니다.",
+        title: CHAPTER_LOCATION_TITLE,
+        imageURL: CHAPTER_LOCATION_IMAGE,
+        description: CHAPTER_LOCATION_DESCRIPTION,
       },
     });
 
+    console.log(initialChapterCard);
+
     const initialPlotCard = await Plot.create({
       isTimeFlag: false,
-      situation: "한 챕터 내에서 전개되는 플롯을 표기하는 플롯 카드입니다. 이 카드를 클릭한 후 에디터에서 편집해보세요!",
+      situation: PLOT_SITUATION,
       location: {
-        title: "장소명",
-        imageURL: "",
-        description: "장소에 대한 설명을 정리하는 공간입니다.",
+        title: PLOT_LOCATION_TITLE,
+        imageURL: PLOT_LOCATION_DESCRIPTION,
+        description: PLOT_LOCATION_DESCRIPTION,
       },
     });
+
+    console.log(initialPlotCard);
 
     await Project.findByIdAndUpdate(
       createdProject._id,
@@ -120,14 +133,14 @@ const createProject = async (req, res, next) => {
     );
 
     const initialCharacter = await Character.create({
-      name: "박무열",
-      role: "화이트 크리스마스의 주인공.",
-      sex: "남",
-      age: "19세",
-      appearance: "튀는 곳 없이 반듯한 외모",
-      personality: "수신고 최고의 모범생으로 '메뉴얼 맨'이라 불리는 바른생활 소년. 수신고의 학부모들에게 '사위 삼고 싶은 남학생' 설문조사를 했을 때 당당하게 1위를 차지했을 정도. 편지를 보낸 인물을 추적해나가는데 있어 가장 적극적으로 행동하는 인물. 또한 학생들 간의 이견다툼에 개입하여 상황을 수습하는 일을 도맡아하고 있다.",
-      etc: "기타사항",
-      imageURL: "",
+      name: CHARACTER_NAME,
+      role: CHARACTER_ROLE,
+      sex: CHARACTER_SEX,
+      age: CHARACTER_AGE,
+      appearance: CHARACTER_APPEARANCE,
+      personality: CHARACTER_PERSONALITY,
+      etc: CHARACTER_ETC,
+      imageURL: CHARACTER_IMAGE,
     });
 
     await Project.findByIdAndUpdate(
