@@ -1,9 +1,9 @@
 const EXAMPLES = {
-  CHAPTER_SITUATION: "기승전결이나 시간을 표기하는 챕터 카드입니다. 이 카드를 클릭한 후 에디터에서 편집해보세요!",
+  CHAPTER_SITUATION: "기승전결이나 시간을 표기하는 챕터 카드입니다. \n이 카드를 클릭한 후 에디터에서 편집해보세요!",
   CHAPTER_LOCATION_TITLE: "장소명",
   CHAPTER_LOCATION_IMAGE: "https://test-bucket960714.s3.ap-northeast-2.amazonaws.com/road-to-finish/nania.jpeg",
   CHAPTER_LOCATION_DESCRIPTION: "장소에 대한 설명을 정리하는 공간입니다.",
-  PLOT_SITUATION: "한 챕터 내에서 전개되는 플롯을 표기하는 플롯 카드입니다. 이 카드를 클릭한 후 에디터에서 편집해보세요!",
+  PLOT_SITUATION: "한 챕터 내에서 전개되는 플롯을 표기하는 플롯 카드입니다.\n이 카드를 클릭한 후 에디터에서 편집해보세요!",
   PLOT_LOCATION_TITLE: "장소명",
   PLOT_LOCATION_IMAGE: "https://test-bucket960714.s3.ap-northeast-2.amazonaws.com/road-to-finish/nania.jpeg",
   PLOT_LOCATION_DESCRIPTION: "장소에 대한 설명을 정리하는 공간입니다.",
