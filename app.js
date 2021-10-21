@@ -1,4 +1,3 @@
-require("dotenv").config();
 require("./config/connectMongoose");
 require("./config/firebaseAdmin");
 
