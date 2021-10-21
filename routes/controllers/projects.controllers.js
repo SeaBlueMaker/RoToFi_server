@@ -113,7 +113,7 @@ const createProject = async (req, res, next) => {
       situation: PLOT_SITUATION,
       location: {
         title: PLOT_LOCATION_TITLE,
-        imageURL: PLOT_LOCATION_DESCRIPTION,
+        imageURL: CHAPTER_LOCATION_IMAGE,
         description: PLOT_LOCATION_DESCRIPTION,
       },
     });
