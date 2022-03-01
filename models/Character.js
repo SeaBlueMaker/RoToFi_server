@@ -7,27 +7,21 @@ const characterSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    required: true,
   },
   sex: {
     type: String,
-    required: true,
   },
   age: {
     type: String,
-    required: true,
   },
   appearance: {
     type: String,
-    required: true,
   },
   personality: {
     type: String,
-    required: true,
   },
   etc: {
     type: String,
-    required: true,
   },
   imageURL: {
     type: String,
